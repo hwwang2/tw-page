@@ -5,6 +5,7 @@ import {
 import { formatCurrency,dateFormat } from '@/app/lib/utils';
 import { getTvInfo, getTvInfoCount } from '@/app/lib/data';
 import Pagination from '@/app/ui/pagination';
+import { RowDataPacket } from 'mysql2';
 
 export default async function Home({
   searchParams,
@@ -17,7 +18,7 @@ export default async function Home({
   const currentPage = Number(searchParams?.page) || 1;
   let cnt = await getTvInfoCount();
   let totalPage = Math.ceil(cnt / ITEMS_PER_PAGE)
-  let infos  = await getTvInfo(currentPage, ITEMS_PER_PAGE);
+  let infos:[RowDataPacket]  = await getTvInfo(currentPage, ITEMS_PER_PAGE) as [RowDataPacket];
   return (
     <main className="flex min-h-screen flex-col items-center justify-between px-24 py-10">
       <div className="">

@@ -4,6 +4,7 @@ import {
 } from './definitions';
 import { formatCurrency } from './utils';
 import { unstable_noStore as noStore  } from 'next/cache';
+import { RowDataPacket } from 'mysql2';
 
 
 
@@ -18,10 +19,10 @@ export async function getTvInfo(page: number, size: number) {
         });
         const [result] = await db.execute("select * from tv_info where status='1' order by create_time desc limit ?, ?", [(page-1)*size,page*size]);
         await db.end();
-        return result;
+        return result as [RowDataPacket];
     } catch (error) {
         console.log(error);
-        return error;
+        return NaN;
     }
 }
 
@@ -34,11 +35,14 @@ export async function getTvInfoCount() {
             user: process.env.MYSQL_USER,
             password: process.env.MYSQL_PASSWORD
         });
-        const [result] = await db.execute("select count(*) as cnt from tv_info where status='1'");
+        // const [result1] = await db.execute("select count(*) as cnt from tv_info where status='1'");
+        // const result2:RowDataPacket = (RowDataPacket)result1;
+        const [result] = await db.execute("select count(*) as cnt from tv_info where status='1'") ;
+        const ret = result as [RowDataPacket];
         await db.end();
-        return result[0]["cnt"];
+        return ret[0]["cnt"];
     } catch (error) {
         console.log(error);
-        return error;
+        return NaN;
     }
 }
