@@ -20,7 +20,7 @@ export default async function Home({
   let totalPage = Math.ceil(cnt / ITEMS_PER_PAGE)
   let infos:[RowDataPacket]  = await getTvInfo(currentPage, ITEMS_PER_PAGE) as [RowDataPacket];
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between px-24 py-10">
+    <main className="flex min-h-screen flex-col items-center justify-between md:px-24 md:py-10 px-4 py-4">
       <div className="">
             {infos?.map((info) => (
               <div
