@@ -24,11 +24,13 @@ export default async function Home({
             {infos?.map((info) => (
               <div
                 key={info.id}
-                className="mb-2 w-full rounded-md bg-white p-4"
+                className="mb-2 w-full rounded-md bg-white p-4 flex-row"
               >
               <div className="">{info.content}</div>
-              <div className="">{info.author}</div>
-              <div className="">{dateFormat(info.create_time)}</div>
+              <div className="flex flex-row border-t-2 mt-4">
+                <div className="basis-1/4 p-2">{info.author}</div>
+                <div className="basis-1/4 p-2">{dateFormat(info.create_time)}</div>
+              </div>
               </div>))
             }
       </div>
